@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
         // primarySwatch: Colors.blue,
         // primaryColor: Colors.black,
         primaryColor: Color(0xff010001),
+        fontFamily: "Karla",
+        accentColor: Color(0xff00171f),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Home(),

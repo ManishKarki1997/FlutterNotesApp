@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
           setState(() {
             _selectedIndex = index;
           });
-          _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+          _pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.easeIn);
         },
       ),
       bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
