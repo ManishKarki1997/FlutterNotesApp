@@ -11,10 +11,6 @@ class NotesProvider with ChangeNotifier{
   UnmodifiableListView<Note> get notes => UnmodifiableListView(_notes);
   
   void addNote(Note note){
-    print(note.title);
-    print(note.description);
-    print(note.createdAt);
-    print(note.noteColor);
     _notes.add(note);
     notifyListeners();
   }

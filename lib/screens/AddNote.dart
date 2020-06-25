@@ -17,7 +17,7 @@ class _AddNoteState extends State<AddNote> {
 
   String title;
   String description;
-  String noteColor;
+  Color noteColor;
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -138,7 +138,7 @@ class _AddNoteState extends State<AddNote> {
                     ],),
                       RaisedButton(child: Text("Save", style: TextStyle(color: Colors.white70),),color: Theme.of(context).accentColor, onPressed: (){
                       setState(() {
-                        noteColor = _shadeColor.toString();
+                        noteColor = _shadeColor;
                       });
                         if(_formKey.currentState.validate()){
                           Scaffold.of(context).showSnackBar(SnackBar(content: Text("Saving the note..."), backgroundColor: Theme.of(context).accentColor, duration: Duration(milliseconds: 1000),));

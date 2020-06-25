@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/providers/notes_provider.dart';
+import 'package:todoapp/screens/SingleNote.dart';
 
 class Notes extends StatefulWidget {
   @override
@@ -86,23 +88,28 @@ class _NotesState extends State<Notes> {
   itemCount: notesProvider.notes.length,
   itemBuilder: (BuildContext context, int index) => new Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0),
-        color: Theme.of(context).accentColor,
+        color: notesProvider.notes[index].noteColor,
         ),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal:20.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(notesProvider.notes[index].title, style: TextStyle(color: Colors.white70, fontFamily: "Raleway",
-              fontSize: 16.0, fontWeight: FontWeight.bold),),
-              SizedBox(height:8.0),
-              Text(notes[index]["date"], style: TextStyle(color: Colors.grey.shade800),),
-            ],
+        child: GestureDetector(
+          onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleNote(note: notesProvider.notes[index],)));
+          },
+                  child: Container(
+            padding: EdgeInsets.symmetric(horizontal:20.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(notesProvider.notes[index].title, style: TextStyle(color: Colors.white70, fontFamily: "Raleway",
+                fontSize: 16.0, fontWeight: FontWeight.bold, height: 1.4),),
+                SizedBox(height:8.0),
+                Text(DateFormat.MMMEd().format(notesProvider.notes[index].createdAt), style: TextStyle(color: Colors.grey.shade400),),
+              ],
+            ),
           ),
         )),
   staggeredTileBuilder: (int index) =>
-        new StaggeredTile.count(2, notes[index]["title"].toString().length > 60 ? 2 : 1.4),
+        new StaggeredTile.count(2, notesProvider.notes[index].title.toString().length > 60 ? 2 : 1.4),
   mainAxisSpacing: 6.0,
   crossAxisSpacing: 6.0,
 ),
