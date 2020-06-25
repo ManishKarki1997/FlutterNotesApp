@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:todoapp/providers/notes_provider.dart';
 
 class Notes extends StatefulWidget {
   @override
@@ -70,14 +72,18 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+
+  var notesProvider = Provider.of<NotesProvider>(context);
+
+
+    return notesProvider.notes.length > 0 ? SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         height: MediaQuery.of(context).size.height,
         color: Theme.of(context).primaryColor,
         child: StaggeredGridView.countBuilder(
   crossAxisCount: 4,
-  itemCount: notes.length,
+  itemCount: notesProvider.notes.length,
   itemBuilder: (BuildContext context, int index) => new Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0),
         color: Theme.of(context).accentColor,
@@ -88,7 +94,7 @@ class _NotesState extends State<Notes> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(notes[index]["title"], style: TextStyle(color: Colors.white70, fontFamily: "Raleway",
+              Text(notesProvider.notes[index].title, style: TextStyle(color: Colors.white70, fontFamily: "Raleway",
               fontSize: 16.0, fontWeight: FontWeight.bold),),
               SizedBox(height:8.0),
               Text(notes[index]["date"], style: TextStyle(color: Colors.grey.shade800),),
@@ -101,6 +107,15 @@ class _NotesState extends State<Notes> {
   crossAxisSpacing: 6.0,
 ),
       ),
-    );
+    ) : Container(
+          color: Theme.of(context).primaryColor,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Center(
+              child: Text("Create a note", style: TextStyle(color: Colors.white70, fontFamily: "Karla", fontSize: 18.0)
+            ,
+          ),
+        ),
+      );
   }
 }
