@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoapp/providers/notes_provider.dart';
 import 'package:todoapp/screens/AddNote.dart';
 import 'package:todoapp/screens/Notes.dart';
 import 'package:todoapp/screens/Settings.dart';
@@ -27,12 +29,15 @@ class _HomeState extends State<Home> {
   
   @override
   Widget build(BuildContext context) {
+  var notesProvider = Provider.of<NotesProvider>(context);
+  notesProvider.loadPreferences();
     return Scaffold(
       appBar: AppBar(
         title: Text("Notes",),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed: (){},)
         ],
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: PageView(
         controller: _pageController,
