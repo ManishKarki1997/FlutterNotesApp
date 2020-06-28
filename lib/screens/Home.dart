@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/providers/notes_provider.dart';
 import 'package:todoapp/screens/AddNote.dart';
 import 'package:todoapp/screens/Notes.dart';
-import 'package:todoapp/screens/Settings.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -47,7 +46,6 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Notes(),
           AddNote(),
-          Settings()
         ],
         onPageChanged: (index){
           setState(() {
@@ -65,10 +63,7 @@ class _HomeState extends State<Home> {
           icon: Icon(Icons.add),
           title: Text("Add"),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text("Settings"),
-        ),
+      
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Theme.of(context).accentColor,
