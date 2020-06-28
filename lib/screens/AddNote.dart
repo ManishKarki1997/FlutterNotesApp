@@ -76,8 +76,8 @@ class _AddNoteState extends State<AddNote> {
   return Scaffold(
     body: SafeArea(
       child:Container(
-              padding: EdgeInsets.symmetric(horizontal:20.0, vertical:12.0),
-      color: Color(0xff010001),
+      padding: EdgeInsets.symmetric(horizontal:20.0, vertical:12.0),
+      color: Theme.of(context).primaryColor,
       height: double.infinity,
       child:     SingleChildScrollView(
         child: Form(
@@ -89,8 +89,10 @@ class _AddNoteState extends State<AddNote> {
                          keyboardType: TextInputType.multiline,
                          textCapitalization: TextCapitalization.sentences,
                          maxLines: null,
-                        style: TextStyle(color: Colors.white70, fontFamily: "Merriweather",fontWeight: FontWeight.bold, fontSize: 20.0,),
-                        decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Title",hintStyle: TextStyle(color: Colors.white70),),
+                         style: Theme.of(context).primaryTextTheme.headline6,
+                        // style: TextStyle(color: Colors.white70, fontFamily: "Merriweather",fontWeight: FontWeight.bold, fontSize: 20.0,),
+                        decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Title",hintStyle: Theme.of(context).primaryTextTheme.subtitle1,),
+                        // decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Title",hintStyle: TextStyle(color: Colors.white70),),
                         onChanged: (String noteTitle){
                           setState(() {
                             title = noteTitle.trim();
@@ -106,8 +108,9 @@ class _AddNoteState extends State<AddNote> {
                         },
                       ),
                       if(title.trim().length > 0)...[
-                         Text("${title.trim().length} / $titleLength characters", style: TextStyle(color: Colors.white70, decoration: TextDecoration.none, fontSize: 12.0,),)
+                         Text("${title.trim().length} / $titleLength characters", style: Theme.of(context).primaryTextTheme.subtitle1)
                       ],
+                    const SizedBox(height: 32.0),
                      Container(
                             // height: MediaQuery.of(context).size.height * (2 / 3),
                             width: MediaQuery.of(context).size.width,
@@ -115,8 +118,10 @@ class _AddNoteState extends State<AddNote> {
                               keyboardType: TextInputType.multiline,
                               textCapitalization: TextCapitalization.sentences,
                               maxLines: null,
-                            style: TextStyle(color: Colors.white70, fontFamily: "Karla",),
-                            decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Type something...",hintStyle: TextStyle(color: Colors.white70),),
+                              style:Theme.of(context).primaryTextTheme.subtitle1,
+                            // style: TextStyle(color: Colors.white70, fontFamily: "Karla",),
+                            decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Type something...",hintStyle: Theme.of(context).primaryTextTheme.subtitle1,),
+                            // decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Type something...",hintStyle: TextStyle(color: Colors.white70),),
                             onChanged: (String noteDesc){
                               setState(() {
                                 description = noteDesc.trim();
@@ -131,17 +136,20 @@ class _AddNoteState extends State<AddNote> {
                           ) ,),
                         
                       
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 24.0),
                     Row(children: <Widget>[
-                      Text("Note Color", style: TextStyle(color: Colors.white),),
+                      Text("Note Color", style: Theme.of(context).primaryTextTheme.subtitle1,),
+                      SizedBox(width: 30.0,),
                     OutlineButton(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).primaryColor,
+                      // color: Theme.of(context).accentColor,
                       onPressed: _openColorPicker,
-                      child: const Text('Choose Color', style: TextStyle(color: Colors.white70),),
+                      child:Text("Choose Color", style: Theme.of(context).primaryTextTheme.subtitle1,) ,
+                      // child: const Text('Choose Color', style: Theme.of(context).primaryTextTheme.subtitle1,),
                     ),
 
                     ],),
-                      RaisedButton(child: Text("Save", style: TextStyle(color: Colors.white70),),color: Theme.of(context).accentColor, onPressed: (){
+                      RaisedButton(child: Text("Save", style: TextStyle(color: Colors.white)),color: Theme.of(context).buttonColor, onPressed: (){
                       setState(() {
                         noteColor = _shadeColor;
                       });

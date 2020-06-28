@@ -17,14 +17,14 @@ class _NotesState extends State<Notes> {
   showDeleteAlertDialog(BuildContext context){
     var notesProvider = Provider.of<NotesProvider>(context, listen: false);
     Widget cancelBtn = FlatButton(
-      child: Text("Cancel", style: TextStyle(color: Colors.white)),
+      child: Text("Cancel", style: TextStyle(color:Theme.of(context).accentColor)),
       onPressed: (){
         Navigator.of(context).pop();
       },
     );
 
     Widget deleteBtn = FlatButton(
-      child: Text("Yes", style: TextStyle(color: Colors.white)),
+      child: Text("Yes", style: TextStyle(color: Theme.of(context).accentColor)),
       onPressed: (){
         Navigator.of(context).pop();
         notesProvider.deleteNote(notesProvider.notes[deleteNoteIndex]);
@@ -32,9 +32,9 @@ class _NotesState extends State<Notes> {
     );
 
     AlertDialog dialog = AlertDialog(
-      title: Text("Delete Note", style: TextStyle(color: Colors.white)),
-      backgroundColor: Theme.of(context).accentColor,
-      content: Text("Are you sure you want to delete the note?", style: TextStyle(color: Colors.white),),
+      title: Text("Delete Note", style: TextStyle(color: Theme.of(context).accentColor)),
+      backgroundColor: Theme.of(context).backgroundColor,
+      content: Text("Are you sure you want to delete the note?", style: TextStyle(color: Theme.of(context).accentColor),),
       actions: <Widget>[
         cancelBtn,
         deleteBtn
@@ -65,15 +65,15 @@ class _NotesState extends State<Notes> {
   itemCount: notesProvider.notes.length,
   itemBuilder: (BuildContext context, int index) => GestureDetector(
       onLongPress: (){
-            // edit the note
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleNote(note: notesProvider.notes[index], editMode: true,)));
-          },
-          onDoubleTap: (){
             // delete the note
             setState(() {
               deleteNoteIndex = index;
             });
             showDeleteAlertDialog(context);
+          },
+          onDoubleTap: (){
+            // edit the note
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleNote(note: notesProvider.notes[index], editMode: true,)));
           },
           onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleNote(note: notesProvider.notes[index], editMode: false,)));
@@ -90,7 +90,7 @@ class _NotesState extends State<Notes> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(notesProvider.notes[index].title, style: TextStyle(color: Colors.white70, fontFamily: "Raleway",
+                  Text(notesProvider.notes[index].title, style: TextStyle(color: Colors.white, fontFamily: "Raleway",
                   fontSize: 16.0, fontWeight: FontWeight.bold, height: 1.4,),),
                   SizedBox(height:8.0),
                   Text(DateFormat.MMMEd().format(DateTime.parse(notesProvider.notes[index].createdAt)), style: TextStyle(color: Colors.grey.shade400, fontSize: 13.0),),

@@ -13,16 +13,17 @@ class _SettingsState extends State<Settings> {
   var notesProvider = Provider.of<NotesProvider>(context);
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Color(0xff010001),
-      child: Center(
-        child: GestureDetector(
-          onTap: (){
-            notesProvider.clearPreferences();
-          },
-                  child: Text("Settings", style: TextStyle(color: Colors.white, decoration: TextDecoration.none,)
-          ,),
-        )
-      ,),
+      color: notesProvider.activeTheme.primaryColor,
+      child: SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              RaisedButton(child: Text("Toggle Theme", style: TextStyle(color: Colors.white),),onPressed: ()=>{ notesProvider.toggleTheme()}, color: Theme.of(context).buttonColor,)
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

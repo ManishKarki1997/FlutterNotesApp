@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:intl/intl.dart';
@@ -92,7 +94,7 @@ class _SingleNoteState extends State<SingleNote> {
       ),
           body: SafeArea(
             child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0,),
+            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 30.0,),
             color: Theme.of(context).primaryColor,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -100,11 +102,12 @@ class _SingleNoteState extends State<SingleNote> {
             child: widget.editMode == false ?  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(widget.note.title, style: TextStyle(color: Colors.white, fontFamily: "Merriweather",fontWeight: FontWeight.bold, fontSize: 20.0, decoration: TextDecoration.none), ),
+                  Text(widget.note.title, style: Theme.of(context).primaryTextTheme.headline6 ),
                   SizedBox(height: 8.0,),
-                  Text("@ ${DateFormat.MMMEd().format(DateTime.parse(widget.note.createdAt))}", style: TextStyle(color: Colors.white70, fontFamily: "Karla",fontWeight: FontWeight.bold, fontSize: 14.0, decoration: TextDecoration.none, height: 1.4), ),
+                  Text("@ ${DateFormat.MMMEd().format(DateTime.parse(widget.note.createdAt))}", style: TextStyle(color: Theme.of(context).accentColor, fontFamily: "Karla",fontWeight: FontWeight.bold, fontSize: 14.0, decoration: TextDecoration.none, height: 1.4), ),
                   SizedBox(height: 20.0,),
-                  Text(widget.note.description, style: TextStyle(color: Colors.white, fontFamily: "Karla",fontWeight: FontWeight.bold, fontSize: 16.0, decoration: TextDecoration.none, height: 1.4), ),
+                  Text(widget.note.description, style: Theme.of(context).primaryTextTheme.subtitle1 ),
+                  SizedBox(height: 20.0,),
                 ],
             ):Form(
               key: _formKey,
@@ -116,8 +119,8 @@ class _SingleNoteState extends State<SingleNote> {
                            keyboardType: TextInputType.multiline,
                            textCapitalization: TextCapitalization.sentences,
                            maxLines: null,
-                          style: TextStyle(color: Colors.white70, fontFamily: "Merriweather",fontWeight: FontWeight.bold, fontSize: 20.0,),
-                          decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Title",hintStyle: TextStyle(color: Colors.white70),),
+                          style: Theme.of(context).primaryTextTheme.headline6,
+                          decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Title",hintStyle: Theme.of(context).primaryTextTheme.bodyText1,),
                           onChanged: (String noteTitle){
                             setState(() {
                               title = noteTitle.trim();
@@ -132,9 +135,11 @@ class _SingleNoteState extends State<SingleNote> {
                             return null;
                           },
                     ),
+                     SizedBox(height: 10.0,),
                      if(title.trim().length > 0)...[
-                      Text("${title.trim().length} / $titleLength characters", style: TextStyle(color: Colors.white70, decoration: TextDecoration.none, fontSize: 12.0,),)
+                      Text("${title.trim().length} / $titleLength characters", style: TextStyle(color: Theme.of(context).accentColor, decoration: TextDecoration.none, fontSize: 12.0,),)
                      ],
+                     SizedBox(height: 30.0,),
                      Container(
                               // height: MediaQuery.of(context).size.height * (2 / 3),
                               width: MediaQuery.of(context).size.width,
@@ -143,8 +148,8 @@ class _SingleNoteState extends State<SingleNote> {
                                 keyboardType: TextInputType.multiline,
                                 textCapitalization: TextCapitalization.sentences,
                                 maxLines: null,
-                              style: TextStyle(color: Colors.white70, fontFamily: "Karla",),
-                              decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Type something...",hintStyle: TextStyle(color: Colors.white70),),
+                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                              decoration: InputDecoration(fillColor: Theme.of(context).accentColor, hintText: "Type something...",hintStyle: Theme.of(context).primaryTextTheme.subtitle1,),
                               onChanged: (String noteDesc){
                                 setState(() {
                                   description = noteDesc.trim();
@@ -158,17 +163,21 @@ class _SingleNoteState extends State<SingleNote> {
                               },
                       ) ,
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 24.0),
                       Row(children: <Widget>[
-                        Text("Note Color", style: TextStyle(color: Colors.white),),
+                        Text("Note Color", style: Theme.of(context).primaryTextTheme.subtitle1,),
+                        SizedBox(width: 20.0,),
                       OutlineButton(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).primaryColor,
                         onPressed: _openColorPicker,
-                        child: const Text('Choose Color', style: TextStyle(color: Colors.white70),),
+                        child:Text("Choose", style:  Theme.of(context).primaryTextTheme.subtitle1,),
+
+                        // child: const Text('Choose Color', style: TextStyle(color: Theme.of(context).primaryColor),),
                       ),
 
                       ],),
-                        RaisedButton(child: Text("Update", style: TextStyle(color: Colors.white70),),color: Theme.of(context).accentColor, onPressed: (){
+                     SizedBox(height: 10.0,),
+                        RaisedButton(child: Text("Update", style:  TextStyle(color: Theme.of(context).primaryColor)),color: Theme.of(context).accentColor, onPressed: (){
                         setState(() {
                           noteColor = _shadeColor;
                         });
@@ -178,7 +187,10 @@ class _SingleNoteState extends State<SingleNote> {
                             // _formKey.currentState.reset();
                             _displaySnackBar(context,"Note Updated");
                             FocusScope.of(context).requestFocus(FocusNode());
+                            Timer(Duration(milliseconds: 1000), () {
+                              // print("Yeah, this line is printed after 3 seconds");
                             Navigator.of(context).pop();
+                            });
                           }else{
                             _displaySnackBar(context,"Please fill all the fields.");
                             // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Please fill all the fields."), backgroundColor: Theme.of(context).accentColor,));
@@ -194,7 +206,10 @@ class _SingleNoteState extends State<SingleNote> {
   }
 
    _displaySnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(content: Text(text), backgroundColor: Theme.of(context).accentColor);
+    final snackBar = SnackBar(content: Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Text(text, style: TextStyle(color: Colors.white),),
+    ), backgroundColor:Color(0xff010001),);
     _scaffoldKey.currentState.showSnackBar(snackBar);  
   }
 }

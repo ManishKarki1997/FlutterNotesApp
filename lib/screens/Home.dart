@@ -33,11 +33,14 @@ class _HomeState extends State<Home> {
   notesProvider.loadPreferences();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notes",),
+        title: Text("Notes", style: Theme.of(context).primaryTextTheme.headline6,),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: (){},)
+          IconButton(icon: Icon(Icons.wb_sunny), onPressed: (){
+            notesProvider.toggleTheme();
+          },)
         ],
         backgroundColor: Theme.of(context).primaryColor,
+        elevation: 4,
       ),
       body: PageView(
         controller: _pageController,
@@ -68,9 +71,11 @@ class _HomeState extends State<Home> {
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.grey.shade500,
-      backgroundColor: Color(0xff010001),
+      selectedItemColor: Theme.of(context).accentColor,
+      unselectedItemColor: Theme.of(context).hoverColor,
+      // unselectedItemColor: Colors.grey.shade500,
+      backgroundColor: Theme.of(context).backgroundColor,
+      // backgroundColor: Color(0xff010001),
       onTap: (int index){
         setState(() {
           _selectedIndex = index;
