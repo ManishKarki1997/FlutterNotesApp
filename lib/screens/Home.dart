@@ -10,7 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedIndex = 0;
   PageController _pageController;
 
@@ -25,18 +24,24 @@ class _HomeState extends State<Home> {
     super.dispose();
     _pageController.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-  var notesProvider = Provider.of<NotesProvider>(context);
-  notesProvider.loadPreferences();
+    var notesProvider = Provider.of<NotesProvider>(context);
+    notesProvider.loadPreferences();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notes", style: Theme.of(context).primaryTextTheme.headline6,),
+        title: Text(
+          "Notes",
+          style: Theme.of(context).primaryTextTheme.headline6,
+        ),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.wb_sunny), onPressed: (){
-            notesProvider.toggleTheme();
-          },)
+          IconButton(
+            icon: Icon(Icons.wb_sunny),
+            onPressed: () {
+              notesProvider.toggleTheme();
+            },
+          )
         ],
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 4,
@@ -47,40 +52,40 @@ class _HomeState extends State<Home> {
           Notes(),
           AddNote(),
         ],
-        onPageChanged: (index){
+        onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
           });
-          _pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+          _pageController.animateToPage(index,
+              duration: Duration(milliseconds: 100), curve: Curves.easeIn);
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.note),
-          title: Text("Notes"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add),
-          title: Text("Add"),
-        ),
-      
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Theme.of(context).accentColor,
-      unselectedItemColor: Theme.of(context).hoverColor,
-      // unselectedItemColor: Colors.grey.shade500,
-      backgroundColor: Theme.of(context).backgroundColor,
-      // backgroundColor: Color(0xff010001),
-      onTap: (int index){
-        setState(() {
-          _selectedIndex = index;
-        });
-        _pageController.jumpToPage(index);
-      },
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note),
+            title: Text("Notes"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            title: Text("Add"),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Theme.of(context).hoverColor,
+        // unselectedItemColor: Colors.grey.shade500,
+        backgroundColor: Theme.of(context).backgroundColor,
+        // backgroundColor: Color(0xff010001),
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          _pageController.jumpToPage(index);
+        },
       ),
     );
   }
-
 
   // void _onNavItemTapped(int index){
   //   setState(() {

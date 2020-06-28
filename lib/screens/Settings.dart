@@ -10,7 +10,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-  var notesProvider = Provider.of<NotesProvider>(context);
+    var notesProvider = Provider.of<NotesProvider>(context);
     return Container(
       height: MediaQuery.of(context).size.height,
       color: notesProvider.activeTheme.primaryColor,
@@ -19,7 +19,14 @@ class _SettingsState extends State<Settings> {
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              RaisedButton(child: Text("Toggle Theme", style: TextStyle(color: Colors.white),),onPressed: ()=>{ notesProvider.toggleTheme()}, color: Theme.of(context).buttonColor,)
+              RaisedButton(
+                child: Text(
+                  "Toggle Theme",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => {notesProvider.toggleTheme()},
+                color: Theme.of(context).buttonColor,
+              )
             ],
           ),
         ),
